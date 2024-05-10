@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/bupd/git-donkey/cmd/ui/listdirs"
 	"github.com/spf13/cobra"
 )
 
@@ -19,5 +20,6 @@ func init() {
 }
 
 func scan(cmd *cobra.Command, args []string) {
+	listdirs.RunModel()
 	fmt.Println("kumaaruuu")
 }

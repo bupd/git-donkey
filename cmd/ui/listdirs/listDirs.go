@@ -96,6 +96,20 @@ func (m model) View() string {
 	return "\n" + m.list.View()
 }
 
+func GStatus() []list.Item {
+	files, err := os.ReadDir("/")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	items := []list.Item{}
+
+	for _, file := range files {
+		items = append(items, item(file.Name()))
+	}
+
+	return items
+}
 
 func RunModel() {
 	items := GStatus()
