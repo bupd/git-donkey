@@ -2,6 +2,7 @@ package tossacoin
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -63,6 +64,19 @@ func (m model) Init() tea.Cmd {
 	return textinput.Blink
 }
 
+func GStatus() string {
+	files, err := os.ReadDir(".")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, file := range files {
+		fmt.Println(file.Name())
+	}
+
+	return ""
+}
+
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
@@ -78,6 +92,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			// If so, exit.
 			if s == "enter" && m.focusIndex == len(m.inputs) {
 
+				fmt.Printf("\nthe stdout of gs:\n %s \n", GStatus())
+				fmt.Printf(string(GStatus()))
 				fmt.Printf("\n your selected fate ✨ %s\n ", m.inputs[1].Value())
 				m.done = true
 				return m, tea.Quit
