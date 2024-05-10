@@ -5,7 +5,9 @@ import (
 	"io"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -96,8 +98,49 @@ func (m model) View() string {
 	return "\n" + m.list.View()
 }
 
+// recursively find the Directories that contains .git directory
+func findGitDirectories(rootDir string) ([]string, error) {
+	var gitDirs []string
+
+	// Walk through the directory and its subdirectories
+	err := filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// Check if the current directory contains a .git directory
+		if info.IsDir() && filepath.Base(path) == ".git" {
+			// Add the parent directory to the gitDirs slice
+			gitDirs = append(gitDirs, filepath.Dir(path))
+			// Do not continue traversing this directory
+			return filepath.SkipDir
+		}
+
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return gitDirs, nil
+}
+
 func GStatus() []list.Item {
-	files, err := os.ReadDir("/")
+	// Example usage
+	rootDir := "/home/bupd/code/pp/"
+
+	gitDirs, err := findGitDirectories(rootDir)
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
+
+	fmt.Println("Directories containing .git directories:")
+	for _, dir := range gitDirs {
+		fmt.Println(dir)
+	}
+	// TODO: MAKE THIS TO READ THE CURRENT DIRECTORY.
+	dir := "/home/bupd/code/pp/"
+	files, err := os.ReadDir(dir)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -107,6 +150,7 @@ func GStatus() []list.Item {
 	for _, file := range files {
 		items = append(items, item(file.Name()))
 	}
+
 
 	return items
 }
