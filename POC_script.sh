@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Function to check if the directory is a git repository
