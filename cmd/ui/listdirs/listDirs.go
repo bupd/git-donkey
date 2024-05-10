@@ -126,6 +126,7 @@ func findGitDirectories(rootDir string) ([]string, error) {
 }
 
 func GStatus() []list.Item {
+	timeNow := time.Now()
 	// Example usage
 	rootDir := "/home/bupd/code/pp/"
 
@@ -151,6 +152,8 @@ func GStatus() []list.Item {
 		items = append(items, item(file.Name()))
 	}
 
+	timeSince := time.Since(timeNow)
+	fmt.Println(timeSince)
 
 	return items
 }
