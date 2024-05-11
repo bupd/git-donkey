@@ -129,27 +129,51 @@ func (m model) View() string {
 	view := ""
 
 	// Not Tracked Changes section
-	view += "\nNot Tracked Changes\n\n"
+	notTrackedStyled := headingStyle.Render("Not Tracked Changes:")
+	view += fmt.Sprintf("%s \n\n", notTrackedStyled)
 	for i, choice := range m.choices {
 
+		if m.notTracked < 1 {
+			nothing := chosenStyle.Render("nothing to show...")
+			view += fmt.Sprintf("%s \n", nothing)
+		}
+
+		choiceStyled := itemStyle.Render(choice)
+		checked := itemStyle.Render("[ ]")
 		cursor := " "
 		if m.cursor == i {
-			cursor = ">"
-		}
-		checked := " "
-		if m.cursor == i {
-			checked = "x"
+			cursor = selectedStyle.Render(">")
+			choiceStyled = selectedItemStyle.Render(choice)
 		}
 
-		if i == (m.notTracked + m.notCommited - 1) {
-			view += fmt.Sprintf("\nNot Commited Changes\n\n")
+		if _, ok := m.selected[i]; ok {
+			checked = chosenCheckStyle.Render("[x]")
+			choiceStyled = chosenStyle.Render(choice)
 		}
 
-		if i == (m.notPushed + m.notCommited + m.notTracked - 1) {
-			view += "\nNot Pushed Changes\n\n"
+		if m.notCommited < 1 {
+		} else {
+			if i == (m.notTracked - 1) {
+				view += fmt.Sprintf("\nNot Commited Changes\n\n")
+				if m.notCommited < 1 {
+					nothing := chosenStyle.Render("nothing to show...")
+					view += fmt.Sprintf("%s \n %v", nothing, m.notTracked)
+				}
+			}
 		}
 
-		view += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
+		if m.notPushed < 1 {
+		} else {
+			if i == (m.notCommited + m.notTracked - 1) {
+				view += "\nNot Pushed Changes\n\n"
+				if m.notPushed < 1 {
+					nothing := chosenStyle.Render("nothing to show...")
+					view += fmt.Sprintf("%s \n", nothing)
+				}
+			}
+		}
+
+		view += fmt.Sprintf("%s %s %s\n\n", cursor, checked, choiceStyled)
 	}
 
 	// Footer
