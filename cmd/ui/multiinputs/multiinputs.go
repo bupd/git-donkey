@@ -2,6 +2,7 @@ package multiinputs
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/bupd/git-donkey/cmd/program"
 	tea "github.com/charmbracelet/bubbletea"
@@ -16,6 +17,7 @@ type model struct {
 	notPushed   int
 	gitDirs     []string
 	totalGits   int
+	done        bool
 }
 
 func InitialModel(gitInfo program.GitInfo) model {
@@ -35,6 +37,14 @@ func InitialModel(gitInfo program.GitInfo) model {
 	}
 }
 
+type helloMsg string
+
+func waitASec() tea.Cmd {
+	return func() tea.Msg {
+		return "kumarlsadjflsajdlfjasldjflasdfads;;fkasdjl;fa"
+	}
+}
+
 func (m model) Init() tea.Cmd {
 	// Just return `nil`, which means "no I/O right now, please."
 	return nil
@@ -42,6 +52,11 @@ func (m model) Init() tea.Cmd {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case helloMsg:
+		// We caught our message like a Pokémon!
+		// From here you could save the output to the model
+		// to display it later in your view.
+		m.choices[3] = string(msg)
 	// Is it a key press?
 	case tea.KeyMsg:
 
@@ -67,13 +82,32 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		// The "enter" key and the spacebar (a literal space) toggle
 		// the selected state for the item that the cursor is pointing at.
 		case "enter", " ":
-			fmt.Printf("value %v", m.choices[m.cursor])
+			targetDirectory := "/home/bupd/code/" // Replace this with the directory you want to navigate to
+
+			// Navigate to the specified directory
+			if err := os.Chdir(targetDirectory); err != nil {
+				fmt.Println("Error navigating to directory:", err)
+				return nil, nil
+			}
+
+			// Confirm the current working directory after navigation
+			cwd, err := os.Getwd()
+			if err != nil {
+				fmt.Println("Error getting current directory:", err)
+				return nil, nil
+			}
+
+			fmt.Println("Successfully navigated to:", cwd)
+
+			fmt.Printf("cd /home/bupd/code/")
+
 			_, ok := m.selected[m.cursor]
 			if ok {
 				delete(m.selected, m.cursor)
 			} else {
 				m.selected[m.cursor] = struct{}{}
 			}
+			return m, nil
 		}
 	}
 
