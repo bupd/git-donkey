@@ -63,14 +63,6 @@ func InitialModel(gitInfo program.GitInfo) model {
 	}
 }
 
-type helloMsg string
-
-func waitASec() tea.Cmd {
-	return func() tea.Msg {
-		return "kumarlsadjflsajdlfjasldjflasdfads;;fkasdjl;fa"
-	}
-}
-
 func (m model) Init() tea.Cmd {
 	// Just return `nil`, which means "no I/O right now, please."
 	return nil
@@ -78,11 +70,6 @@ func (m model) Init() tea.Cmd {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-	case helloMsg:
-		// We caught our message like a Pokémon!
-		// From here you could save the output to the model
-		// to display it later in your view.
-		m.choices[3] = string(msg)
 	// Is it a key press?
 	case tea.KeyMsg:
 
