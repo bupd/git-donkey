@@ -48,11 +48,6 @@ func GitDirs() (int, []string) {
 	}
 	notTracked := len(gitDirs)
 
-	fmt.Println("Directories containing .git directories:")
-	for _, dir := range gitDirs {
-		fmt.Println(dir)
-	}
-
 	timeSince := time.Since(timeNow)
 	fmt.Println(timeSince)
 
@@ -90,7 +85,6 @@ func UntrackedChanges(dirs []string) []string {
 			log.Printf("error %v", err)
 		} else if hasChanges {
 			untracked = append(untracked, path)
-			fmt.Printf("%s has untracked changes\n", path)
 		}
 	}
 	return untracked
@@ -115,11 +109,9 @@ func hasUncommittedChanges(repoPath string) (bool, error) {
 	}
 
 	// if thee status.string comes true then no file is modified.
-	fmt.Printf("\n\n%+v\n", status.String())
 	// Check if there are changes that are not staged
 	for _, entry := range status {
 		if entry.Staging == git.Added {
-			fmt.Printf("added")
 			return true, nil
 		}
 	}
@@ -164,7 +156,6 @@ func hasUnpushedChanges(repoPath string) (bool, error) {
 	isEqual := compareRefContents(localRefContent, originRefContent)
 
 	// Print the result
-	fmt.Println("Are local/main and origin/main equal?", isEqual)
 	return isEqual, nil
 }
 
