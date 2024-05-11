@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 
@@ -13,7 +12,7 @@ type editorFinishedMsg struct{ err error }
 func openEditor() tea.Cmd {
 	editor := os.Getenv("EDITOR")
 	if editor == "" {
-		editor = "vim"
+		editor = "nvim"
 	}
 	c := exec.Command(editor) //nolint:gosec
 	return tea.ExecProcess(c, func(err error) tea.Msg {
@@ -62,10 +61,10 @@ func (m model) View() string {
 	return "Press 'e' to open your EDITOR.\nPress 'a' to toggle the altscreen\nPress 'q' to quit.\n"
 }
 
-func main() {
-	m := model{}
-	if _, err := tea.NewProgram(m).Run(); err != nil {
-		fmt.Println("Error running program:", err)
-		os.Exit(1)
-	}
-}
+// func main() {
+// 	m := model{}
+// 	if _, err := tea.NewProgram(m).Run(); err != nil {
+// 		fmt.Println("Error running program:", err)
+// 		os.Exit(1)
+// 	}
+// }
