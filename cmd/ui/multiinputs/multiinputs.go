@@ -34,6 +34,17 @@ var (
 				Padding(0, 1, 0)
 )
 
+type editorFinishedMsg struct{ err error }
+
+// change the dir and execute lazygit on the specified directory
+func changeDir(dir string) tea.Cmd {
+	c := exec.Command("lazygit")
+	c.Dir = dir
+	return tea.ExecProcess(c, func(err error) tea.Msg {
+		return editorFinishedMsg{err}
+	})
+}
+
 func InitialModel(gitInfo program.GitInfo) model {
 	choices := append(gitInfo.Untracked, gitInfo.Uncommitted...)
 	choices = append(choices, gitInfo.Unpushed...)
