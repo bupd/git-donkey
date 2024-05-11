@@ -108,10 +108,11 @@ func hasUncommittedChanges(repoPath string) (bool, error) {
 		return false, err
 	}
 
-	// if thee status.string comes true then no file is modified.
+	// if the status.string comes true then no file is modified.
 	// Check if there are changes that are not staged
 	for _, entry := range status {
-		if entry.Staging == git.Added {
+		if entry.Staging == git.Added || entry.Staging == git.Modified {
+			fmt.Printf("%s, ", repoPath)
 			return true, nil
 		}
 	}
