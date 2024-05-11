@@ -20,8 +20,6 @@ var scanCmd = &cobra.Command{
 }
 
 var logo = `
-
-
                           /\          /\
                          ( \\        // )
                           \ \\      // /
@@ -43,7 +41,15 @@ var logo = `
       |_|  |_|        |_||
        \_\  \_\        \_\\
 
-  
+  `
+
+var logo2 = `
+  \\__// ❤️ bupd
+   /OO\\_______
+   \__/\       )\/\
+       ||----/ |
+       ||     ||
+
   `
 
 var logoStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("81")).Bold(true)
@@ -64,7 +70,7 @@ func scan(cmd *cobra.Command, args []string) {
 	gitInfo.Unpushed = program.UnpushedChanges(gitInfo.GitDirs)
 	gitInfo.TotalUnpushed = len(gitInfo.Unpushed)
 
-	fmt.Printf("%s\n", logoStyle.Render(logo))
+	fmt.Printf("%s\n", logoStyle.Render(logo2))
 
 	p := tea.NewProgram(multiinputs.InitialModel(gitInfo))
 	if _, err := p.Run(); err != nil {
