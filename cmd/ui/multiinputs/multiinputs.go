@@ -150,7 +150,7 @@ func (m model) View() string {
 
 		if m.notCommited < 1 {
 		} else {
-			if i == (m.notTracked - 1) {
+			if i == (m.notTracked) {
 				notCommitedStyled := headingStyle.Render("Not Commited Changes:")
 				view += fmt.Sprintf("\n%s\n\n", notCommitedStyled)
 				if m.notCommited < 1 {
@@ -162,7 +162,7 @@ func (m model) View() string {
 
 		if m.notPushed < 1 {
 		} else {
-			if i == (m.notCommited + m.notTracked - 1) {
+			if i == (m.notCommited + m.notTracked) {
 				notPushedStyled := notPushStyle.Render("Not Pushed Changes:")
 				view += fmt.Sprintf("\n%s\n\n", notPushedStyled)
 				if m.notPushed < 1 {
