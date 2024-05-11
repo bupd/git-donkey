@@ -34,9 +34,24 @@ func scan(cmd *cobra.Command, args []string) {
 	gitInfo.Unpushed = program.UnpushedChanges(gitInfo.GitDirs)
 	gitInfo.TotalUnpushed = len(gitInfo.Unpushed)
 
-	p := tea.NewProgram(multiinputs.InitialModel(gitInfo), tea.WithAltScreen())
+	p := tea.NewProgram(multiinputs.InitialModel(gitInfo))
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)
 		os.Exit(1)
 	}
+
+	targetDirectory := "/home/bupd/code/" // Replace this with the directory you want to navigate to
+
+	// Navigate to the specified directory
+	if err := os.Chdir(targetDirectory); err != nil {
+		fmt.Println("Error navigating to directory:", err)
+	}
+
+	// Confirm the current working directory after navigation
+	cwd, err := os.Getwd()
+	if err != nil {
+		fmt.Println("Error getting current directory:", err)
+	}
+
+	fmt.Println("Successfully navigated to:", cwd)
 }
