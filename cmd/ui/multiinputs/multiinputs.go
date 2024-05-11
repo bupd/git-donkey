@@ -32,6 +32,12 @@ var (
 				Foreground(lipgloss.Color("#000000")).
 				Bold(true).
 				Padding(0, 1, 0)
+
+	notPushStyle = lipgloss.NewStyle().
+			Background(lipgloss.Color("#ef2929")).
+			Foreground(lipgloss.Color("#000000")).
+			Bold(true).
+			Padding(0, 1, 0)
 )
 
 type editorFinishedMsg struct{ err error }
@@ -126,7 +132,7 @@ func (m model) View() string {
 
 		if m.notTracked < 1 {
 			nothing := chosenStyle.Render("nothing to show...")
-			view += fmt.Sprintf("%s \n", nothing)
+			view += fmt.Sprintf("%s\n", nothing)
 		}
 
 		choiceStyled := itemStyle.Render(choice)
@@ -145,7 +151,8 @@ func (m model) View() string {
 		if m.notCommited < 1 {
 		} else {
 			if i == (m.notTracked - 1) {
-				view += fmt.Sprintf("\nNot Commited Changes\n\n")
+				notCommitedStyled := headingStyle.Render("Not Commited Changes:")
+				view += fmt.Sprintf("\n%s\n\n", notCommitedStyled)
 				if m.notCommited < 1 {
 					nothing := chosenStyle.Render("nothing to show...")
 					view += fmt.Sprintf("%s \n %v", nothing, m.notTracked)
@@ -156,7 +163,8 @@ func (m model) View() string {
 		if m.notPushed < 1 {
 		} else {
 			if i == (m.notCommited + m.notTracked - 1) {
-				view += "\nNot Pushed Changes\n\n"
+				notPushedStyled := notPushStyle.Render("Not Pushed Changes:")
+				view += fmt.Sprintf("\n%s\n\n", notPushedStyled)
 				if m.notPushed < 1 {
 					nothing := chosenStyle.Render("nothing to show...")
 					view += fmt.Sprintf("%s \n", nothing)
