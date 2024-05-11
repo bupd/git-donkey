@@ -2,10 +2,11 @@ package multiinputs
 
 import (
 	"fmt"
-	"os"
+	"os/exec"
 
 	"github.com/bupd/git-donkey/cmd/program"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type model struct {
@@ -19,6 +20,19 @@ type model struct {
 	totalGits   int
 	done        bool
 }
+
+var (
+	itemStyle         = lipgloss.NewStyle().PaddingLeft(1)
+	selectedItemStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("81"))
+	selectedStyle     = lipgloss.NewStyle().PaddingLeft(0).Foreground(lipgloss.Color("81"))
+	chosenStyle       = lipgloss.NewStyle().PaddingLeft(2).Foreground(lipgloss.Color("244"))
+	chosenCheckStyle  = lipgloss.NewStyle().PaddingLeft(1).Foreground(lipgloss.Color("81"))
+	headingStyle      = lipgloss.NewStyle().
+				Background(lipgloss.Color("#8ae234")).
+				Foreground(lipgloss.Color("#000000")).
+				Bold(true).
+				Padding(0, 1, 0)
+)
 
 func InitialModel(gitInfo program.GitInfo) model {
 	choices := append(gitInfo.Untracked, gitInfo.Uncommitted...)
