@@ -3,20 +3,31 @@ package multiinputs
 import (
 	"fmt"
 
+	"github.com/bupd/git-donkey/cmd/program"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
 type model struct {
-	choices  []string         // items on the to-do list
-	cursor   int              // which to-do list item our cursor is pointing at
-	selected map[int]struct{} // which to-do items are selected
+	choices     []string
+	cursor      int              // which to-do list item our cursor is pointing at
+	selected    map[int]struct{} // which to-do items are selected
+	notTracked  int
+	notCommited int
+	notPushed   int
+	gitDirs     []string
+	totalGits   int
 }
 
-func InitialModel() model {
-	return model{
-		// Our to-do list is a grocery list
-		choices: []string{"Buy carrots", "Buy celery", "Buy kohlrabi"},
+func InitialModel(gitInfo program.GitInfo) model {
+	choices := append(gitInfo.Untracked, gitInfo.Uncommitted...)
+	choices = append(choices, gitInfo.Unpushed...)
 
+	return model{
+		choices: choices,
+
+		notTracked:  gitInfo.TotalUntracked,
+		notCommited: gitInfo.TotalUncommitted,
+		notPushed:   gitInfo.TotalUnpushed,
 		// A map which indicates which choices are selected. We're using
 		// the map like a mathematical set. The keys refer to the indexes
 		// of the `choices` slice, above.
@@ -56,6 +67,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		// The "enter" key and the spacebar (a literal space) toggle
 		// the selected state for the item that the cursor is pointing at.
 		case "enter", " ":
+			fmt.Printf("value %v", m.choices[m.cursor])
 			_, ok := m.selected[m.cursor]
 			if ok {
 				delete(m.selected, m.cursor)
@@ -71,31 +83,35 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	// The header
-	s := "What should we buy at the market?\n\n"
+	// Initialize the view string
+	view := ""
 
-	// Iterate over our choices
+	// Not Tracked Changes section
+	view += "\nNot Tracked Changes\n\n"
 	for i, choice := range m.choices {
 
-		// Is the cursor pointing at this choice?
-		cursor := " " // no cursor
+		cursor := " "
 		if m.cursor == i {
-			cursor = ">" // cursor!
+			cursor = ">"
+		}
+		checked := " "
+		if m.cursor == i {
+			checked = "x"
 		}
 
-		// Is this choice selected?
-		checked := " " // not selected
-		if m.cursor == i {
-			checked = "x" // selected!
+		if i == (m.notTracked + m.notCommited - 1) {
+			view += fmt.Sprintf("\nNot Commited Changes\n\n")
 		}
 
-		// Render the row
-		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
+		if i == (m.notPushed + m.notCommited + m.notTracked - 1) {
+			view += "\nNot Pushed Changes\n\n"
+		}
+
+		view += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
 	}
 
-	// The footer
-	s += "\nPress q to quit.\n"
+	// Footer
+	view += "\nPress q to quit.\n"
 
-	// Send the UI for rendering
-	return s
+	return view
 }
