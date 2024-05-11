@@ -45,6 +45,7 @@ func changeDir(dir string) tea.Cmd {
 	})
 }
 
+// InitialModel to render the TUI
 func InitialModel(gitInfo program.GitInfo) model {
 	choices := append(gitInfo.Untracked, gitInfo.Uncommitted...)
 	choices = append(choices, gitInfo.Unpushed...)
@@ -92,6 +93,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c", "q":
 			return m, tea.Quit
 
+		case "c":
+			dir := m.choices[m.cursor]
+			return m, changeDir(dir)
 		// The "up" and "k" keys move the cursor up
 		case "up", "k":
 			if m.cursor > 0 {
