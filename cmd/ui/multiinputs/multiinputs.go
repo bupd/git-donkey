@@ -107,30 +107,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		// The "enter" key and the spacebar (a literal space) toggle
 		// the selected state for the item that the cursor is pointing at.
 		case "enter", " ":
-			targetDirectory := "/home/bupd/code/" // Replace this with the directory you want to navigate to
-
-			// Navigate to the specified directory
-			if err := os.Chdir(targetDirectory); err != nil {
-				fmt.Println("Error navigating to directory:", err)
-				return nil, nil
-			}
-
-			// Confirm the current working directory after navigation
-			cwd, err := os.Getwd()
-			if err != nil {
-				fmt.Println("Error getting current directory:", err)
-				return nil, nil
-			}
-
-			fmt.Println("Successfully navigated to:", cwd)
-
-			fmt.Printf("cd /home/bupd/code/")
-
 			_, ok := m.selected[m.cursor]
 			if ok {
 				delete(m.selected, m.cursor)
 			} else {
 				m.selected[m.cursor] = struct{}{}
+				dir := m.choices[m.cursor]
+				return m, changeDir(dir)
 			}
 			return m, nil
 		}
