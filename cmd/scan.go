@@ -44,6 +44,8 @@ var logo = `
   `
 
 var logo2 = `
+git-donkey
+
       \\__//
        /OO\\_______
        \__/\       )\/\
@@ -72,7 +74,7 @@ func scan(cmd *cobra.Command, args []string) {
 
 	fmt.Printf("%s\n", logoStyle.Render(logo2))
 
-	p := tea.NewProgram(multiinputs.InitialModel(gitInfo))
+	p := tea.NewProgram(multiinputs.InitialModel(gitInfo), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)
 		os.Exit(1)
