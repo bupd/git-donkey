@@ -40,7 +40,7 @@ func findGitDirectories(rootDir string) ([]string, error) {
 func GitDirs() (int, []string) {
 	timeNow := time.Now()
 	// Example usage
-	rootDir := "/home/bupd/code/pp/"
+	rootDir := "."
 
 	gitDirs, err := findGitDirectories(rootDir)
 	if err != nil {
