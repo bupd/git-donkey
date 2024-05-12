@@ -82,7 +82,7 @@ func UntrackedChanges(dirs []string) []string {
 
 		hasChanges, err := hasUntrackedChanges(path)
 		if err != nil {
-			log.Printf("error %v", err)
+			log.Printf("\n\n\n kuma error %v", err)
 		} else if hasChanges {
 			untracked = append(untracked, path)
 		}
@@ -125,7 +125,7 @@ func UncommittedChanges(dirs []string) []string {
 
 		hasChanges, err := hasUncommittedChanges(path)
 		if err != nil {
-			log.Printf("error %v", err)
+			log.Printf("\n kumaru error %v", err)
 		} else if hasChanges {
 			uncommitted = append(uncommitted, path)
 		}
@@ -141,14 +141,12 @@ func hasUnpushedChanges(repoPath string) (bool, error) {
 	// Read the contents of localRefPath
 	localRefContent, err := readFileContents(localRefPath)
 	if err != nil {
-		fmt.Println("Error reading local ref:", err)
 		return false, err
 	}
 
 	// Read the contents of originRefPath
 	originRefContent, err := readFileContents(originRefPath)
 	if err != nil {
-		fmt.Println("Error reading origin ref:", err)
 		return false, err
 	}
 
@@ -179,7 +177,7 @@ func UnpushedChanges(dirs []string) []string {
 
 		hasChanges, err := hasUnpushedChanges(path)
 		if err != nil {
-			log.Printf("error %v", err)
+			_ = err
 		} else if !hasChanges {
 			unpushed = append(unpushed, path)
 		}

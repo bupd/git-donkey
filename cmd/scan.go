@@ -72,6 +72,7 @@ func scan(cmd *cobra.Command, args []string) {
 	gitInfo.Unpushed = program.UnpushedChanges(gitInfo.GitDirs)
 	gitInfo.TotalUnpushed = len(gitInfo.Unpushed)
 
+	fmt.Printf("%s\n", logoStyle.Render(string(gitInfo.TotalGits)))
 	fmt.Printf("%s\n", logoStyle.Render(logo2))
 
 	p := tea.NewProgram(multiinputs.InitialModel(gitInfo), tea.WithAltScreen())
