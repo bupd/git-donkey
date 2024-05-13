@@ -61,6 +61,8 @@ func init() {
 }
 
 func scan(cmd *cobra.Command, args []string) {
+	fmt.Printf("Scanning through repos...\n")
+	fmt.Printf("This may take a while Please wait...\n\n")
 	// Initialize GitInfo struct
 	gitInfo := program.GitInfo{}
 	// get the git dirs
