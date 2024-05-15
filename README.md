@@ -8,7 +8,7 @@
  
 <h2 id="started">Introduction:</h2>
 
-git-donkey is a tool designed to help developers keep their local git branches synchronized with the remote repository. It automates the process of fetching updates and merging them into the current branch, ensuring that your local branch is always up-to-date.
+git-donkey is a tool designed to help developers keep their local git branches synchronized with the remote repository. It automates the process of searching through your local repositories & show you the updates and push help push untracked changes to the remote repo. ensuring that your local & remote branch is always up-to-date.
  
 
 <h2 id="started">🚀 Getting started</h2>
