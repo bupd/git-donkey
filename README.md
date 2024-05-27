@@ -13,6 +13,11 @@ git-donkey is a tool designed to help developers keep their local git branches s
 
 <h2 id="started">🚀 Getting started</h2>
 
+
+https://github.com/bupd/git-donkey/assets/89722848/52f90de7-a429-4d34-97bc-078b3ac223db
+
+
+
 <h3>Prerequisites</h3>
 
 Please make sure you installed golang.
