@@ -10,4 +10,3 @@ type GitInfo struct {
 	Unpushed         []string
 	TotalUnpushed    int
 }
-
