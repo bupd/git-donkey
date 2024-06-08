@@ -19,7 +19,7 @@ var scanCmd = &cobra.Command{
 	Run: scan,
 }
 
-var logo = `
+var _ = `
                           /\          /\
                          ( \\        // )
                           \ \\      // /
