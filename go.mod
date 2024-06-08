@@ -1,6 +1,6 @@
 module github.com/bupd/git-donkey
 
-go 1.22.3
+go 1.22
 
 require (
 	github.com/charmbracelet/bubbles v0.18.0
