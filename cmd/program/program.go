@@ -19,7 +19,6 @@ func findGitDirectories(rootDir string) ([]string, error) {
 		if err != nil {
 			return err
 		}
-
 		// Check if the current directory contains a .git directory
 		if info.IsDir() && filepath.Base(path) == ".git" {
 			// Add the parent directory to the gitDirs slice
