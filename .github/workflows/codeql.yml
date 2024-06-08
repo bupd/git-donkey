@@ -2,9 +2,15 @@ name: Code Scanning
 
 on:
   push:
-    branches: [trunk]
+    paths:
+      - "**.go"
+      - go.mod
+      - go.sum
   pull_request:
-    branches: [trunk]
+    paths:
+      - "**.go"
+      - go.mod
+      - go.sum
     paths-ignore:
       - '**/*.md'
   schedule:
