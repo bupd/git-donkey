@@ -1,5 +1,6 @@
 #!/bin/bash
 
+## THIS SCRIPT SERVES AS A PROOF OF CONCEPT OF THE GIT DONKEY PROJECT. ##
 # Function to check if the directory is a git repository
 check_git_repo() {
     if [ -d .git ]; then
