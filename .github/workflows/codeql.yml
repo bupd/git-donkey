@@ -11,10 +11,6 @@ on:
       - "**.go"
       - go.mod
       - go.sum
-    paths-ignore:
-      - '**/*.md'
-  schedule:
-    - cron: "0 0 * * 0"
 
 permissions:
   actions: read  # for github/codeql-action/init to get workflow details
