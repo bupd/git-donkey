@@ -16,9 +16,6 @@ type model struct {
 	notTracked  int
 	notCommited int
 	notPushed   int
-	gitDirs     []string
-	totalGits   int
-	done        bool
 }
 
 var (
