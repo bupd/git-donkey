@@ -2,7 +2,7 @@
 <h1 align="center" style="font-weight: bold;">git-donkey 🐴</h1>
 
 
-<p align="center">A Donkey Don to help you maintain your local git branch updated always.</p>
+<p align="center">A Donkey Don to help you manage your local git branches/repositories.</p>
 
 
  
