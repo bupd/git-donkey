@@ -205,12 +205,3 @@ func UnpushedChanges(dirs []string) []string {
 	}
 	return unpushed
 }
-
-
-func GetVersion(flag string) float64 {
-    var version = 1.0
-	if flag != "version" {
-		fmt.Printf("Error in the flag")
-	}
-	return version
-}
