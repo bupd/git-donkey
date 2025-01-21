@@ -75,3 +75,6 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 
 [💾 Commit pattern](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
 
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/bupd/git-donkey.svg)](https://starchart.cc/bupd/git-donkey)
+
