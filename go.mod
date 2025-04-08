@@ -2,6 +2,7 @@ module github.com/bupd/git-donkey
 
 go 1.23
 
+
 require (
 	github.com/charmbracelet/bubbles v0.20.0
 	github.com/charmbracelet/bubbletea v1.2.4
